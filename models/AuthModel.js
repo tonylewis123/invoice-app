@@ -22,7 +22,8 @@ class AuthModel {
       }
       return generateResponseObject(true, null, {
         id: user._id,
-        email: user.email
+        email: user.email,
+        role: user.role
       });
     } catch (error) {
       throw new Error(error.message);

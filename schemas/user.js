@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   password: String,
-  username: {
+  email: {
     type: String,
     unique: true
   },
@@ -11,14 +11,9 @@ const UserSchema = new Schema({
     type: String,
     default: "Name Surname"
   },
-  paidForEvents: {
-    type: Number,
-    default: 0
-  },
   role: {
     type: String,
-    enums: [ 'employer', 'admin', 'superadmin' ],
-    default: 'employer'
+    enums: [ 'employer', 'admin', 'superadmin' ]
   }
 });
 
