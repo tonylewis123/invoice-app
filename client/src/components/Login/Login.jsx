@@ -5,7 +5,6 @@ import loginBg from "../../assets/img/login_bg.png";
 import {Route, NavLink} from "react-router-dom";
 
 import { POST } from '../../core/CRUD';
-import CONFIGS from '../../core/configs';
 
 
 export default class Login extends React.Component {
@@ -79,7 +78,7 @@ export default class Login extends React.Component {
 
       if(email && password){
         try {
-          let response = await POST(`${CONFIGS.DOMAIN}/api/auth/login`, { email, password });
+          let response = await POST('api/auth/login', { email, password });
           if(response.success){
             localStorage.setItem('userId', response.data.id);
             localStorage.setItem('userToken', response.data.token);
