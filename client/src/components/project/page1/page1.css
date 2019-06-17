@@ -1,0 +1,46 @@
+.Page1{
+    width: 100%;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    }
+    .page1_size{
+        width: 600px;
+        margin: 0 auto;
+    }
+    .next_btn_div{
+        width: 100%;
+        text-align: center
+    }
+    .next_btn{
+        width: 250px;
+        min-width: 150px;
+        height: 55px;
+        background-color:#2A617E;
+        border: none;
+        outline: none;
+        color: #fff !important;
+        margin: 100px auto 0;
+        font-size: 30px;
+        font-weight: bold;
+        border-radius: 20px;
+    }
+    .fa-arrow-right{
+        margin-left: 30px;
+    }
+    .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
+        color: #fff;
+    }
+    @media screen and (max-width:767px){
+        .page1_size{
+            width: 100%;
+            margin: 0 auto;
+        }
+        .next_btn{
+            width: 130px;
+            height: 42px;
+            margin: 100px auto 0;
+            font-size: 20px;
+        }
+    }

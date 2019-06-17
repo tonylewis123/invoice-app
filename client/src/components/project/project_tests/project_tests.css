@@ -1,0 +1,37 @@
+.ui.fluid.dropdown {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    background: #2A617E;
+    font-size: 20px;
+    color: #fff;
+    height: 60px;
+    
+}
+.ui.selection.dropdown .menu {
+    max-height: 15rem !important;
+}
+.text_tittle{
+    font-size: 18px
+}
+.test_flex{
+    width: 90%;
+    margin:  0 auto;
+    display: flex;
+    justify-content: space-between
+}
+.test_flex p{
+    font-size: 16px;
+}
+.ui.selection.dropdown {
+    transform: none !important;
+}
+.ui.selection.dropdown>.dropdown.icon {
+    opacity: 1;
+}
+.ui.dropdown .menu>.item {
+    color: #000;
+}
+.ui.dropdown .menu {
+    z-index: auto;
+}
