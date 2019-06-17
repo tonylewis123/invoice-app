@@ -10,9 +10,10 @@ export const GET = async url => {
         "Authorization": `Bearer ${localStorage.getItem('userToken')}`
       }
     });
-    let responseObj = response.json();
-
-    return responseObj;
+    let statusCode = response.status;
+    let responseObj = await response.json();
+    
+    return Object.assign(responseObj, { statusCode });
   } catch (error) {
     throw new Error(error.message);
   }
@@ -28,9 +29,10 @@ export const POST = async (url, data) => {
         'Content-Type': 'application/json'
       }
     });
-    let responseObj = response.json();
+    let statusCode = response.status;
+    let responseObj = await response.json();
 
-    return responseObj;
+    return Object.assign(responseObj, { statusCode });
   } catch (error) {
     throw new Error(error.message);
   }
@@ -46,9 +48,10 @@ export const PUT = async (url, data) => {
         'Content-Type': 'application/json'
       }
     });
-    let responseObj = response.json();
+    let statusCode = response.status;
+    let responseObj = await response.json();
 
-    return responseObj;
+    return Object.assign(responseObj, { statusCode });
   } catch (error) {
     throw new Error(error.message);
   }
@@ -64,9 +67,10 @@ export const DELETE = async (url, data) => {
         'Content-Type': 'application/json'
       }
     });
-    let responseObj = response.json();
+    let statusCode = response.status;
+    let responseObj = await response.json();
 
-    return responseObj;
+    return Object.assign(responseObj, { statusCode });
   } catch (error) {
     throw new Error(error.message);
   }

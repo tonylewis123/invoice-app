@@ -3,9 +3,7 @@ import './login.css';
 import logo from "../../assets/img/logo.png";
 import loginBg from "../../assets/img/login_bg.png";
 import {Route, NavLink} from "react-router-dom";
-
 import { POST } from '../../core/CRUD';
-
 
 export default class Login extends React.Component {
       constructor(props){
@@ -40,7 +38,7 @@ export default class Login extends React.Component {
           }
       }
 
-
+      
     onChangeInp = (value,index) => {
         const inputs = this.state.inputs
         const input = inputs[index];
@@ -64,12 +62,10 @@ export default class Login extends React.Component {
                     input.isValid = false
                 }
             }
-
         })
         this.setState({
             inputs
         })
-
     }
 
     loginUser = async data => {
@@ -82,7 +78,7 @@ export default class Login extends React.Component {
           if(response.success){
             localStorage.setItem('userId', response.data.id);
             localStorage.setItem('userToken', response.data.token);
-            window.location.href = '/page1';
+            window.location.href = '/Project';
           } else {
             this.setState({error: response.error});
           }
@@ -102,6 +98,7 @@ export default class Login extends React.Component {
         backgroundImage: `url(${loginBg})`,
       }
     render(){
+    
         return(
             <div className="Login" style={this.loginStyle}>
                 <div className="login_size">
