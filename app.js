@@ -21,10 +21,9 @@ const api = require('./controllers/Api');
 api.initializeApp(app);
 
 if (process.env.NODE_ENV === 'production') {
-  console.log('===============');
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'client/build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, 'client/build/index.html'));
   });
 }
 
