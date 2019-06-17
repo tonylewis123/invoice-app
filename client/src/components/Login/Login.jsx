@@ -78,7 +78,7 @@ export default class Login extends React.Component {
 
       if(email && password){
         try {
-          let response = await POST('/api/auth/login', { email, password });
+          let response = await POST('api/auth/login', { email, password });
           if(response.success){
             localStorage.setItem('userId', response.data.id);
             localStorage.setItem('userToken', response.data.token);
