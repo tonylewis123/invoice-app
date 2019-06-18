@@ -13,7 +13,8 @@ export default class Project extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            error: ''
+            error: '',
+            user: ''
         };
     }
 
@@ -30,21 +31,25 @@ export default class Project extends React.Component{
             }
             return this.setState({error: response.error});
         }
-        if(response.data.role === "employer"){
-            return window.location.href = '/page1';
-        }
-        else if(response.data.role === "admin"){
-            return window.location.href = '/admin_page';   
-        }
-        else if(response.data.role === "superadmin"){
-            return window.location.href = '/super_admin_page';   
-        }
+        this.setState({user: response.data});
     }
+
+    renderDashboard = user => {
+        if(user.role && user.role === 'employer'){
+          return (<Page1 user={user}/>);
+        }
+        if(user.role && user.role === 'superadmin'){
+          return (<Super_admin_page user={user}/>);
+        }
+        if(user.role && user.role === 'admin'){
+          return (<Admin_page user={user}/>);
+        }
+      }
 
     render(){
         return(
             <div className="project">
-             
+                { this.state.user ? this.renderDashboard(this.state.user) : null }
             </div>
         )
     }

@@ -26,7 +26,8 @@ export const POST = async (url, data) => {
       body: JSON.stringify(data),
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${localStorage.getItem('userToken')}`
       }
     });
     let statusCode = response.status;
@@ -45,7 +46,8 @@ export const PUT = async (url, data) => {
       body: JSON.stringify(data),
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${localStorage.getItem('userToken')}`
       }
     });
     let statusCode = response.status;
@@ -64,7 +66,8 @@ export const DELETE = async (url, data) => {
       body: JSON.stringify(data),
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${localStorage.getItem('userToken')}`
       }
     });
     let statusCode = response.status;
