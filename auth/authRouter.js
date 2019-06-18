@@ -30,7 +30,6 @@ router.post('/login', (req, res, next) => {
     if (!user) {
       return res.status(200).send(JSON.stringify(generateResponseObject(false, info, null)));
     }
-
     req.logIn(user, { session: false }, err => {
       if (err) {
         return next(err);

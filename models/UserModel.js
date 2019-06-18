@@ -2,6 +2,7 @@ const db = require('../database');
 const generateResponseObject = require('../lib/generateResponseObject');
 const generateRandomPassword = require('../lib/generateRandomPassword');
 const validate = require('../lib/validator');
+const createHash = require('../lib/hash');
 const configs = require('../configs');
 require('../schemas/user');
 
