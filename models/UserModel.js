@@ -54,7 +54,7 @@ class UserModel {
 
   async getAllUsers(){
     try {
-      let users = await this.Users.find({ role: {$ne: 'superadmin'} });
+      let users = await this.Users.find({ role: {$ne: 'superadmin'} }).select('_id fullName email role');
       return generateResponseObject(true, null, users);
     } catch (error) {
       throw new Error(error.message);
