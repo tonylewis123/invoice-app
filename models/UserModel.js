@@ -3,6 +3,7 @@ const generateResponseObject = require('../lib/generateResponseObject');
 const generateRandomPassword = require('../lib/generateRandomPassword');
 const validate = require('../lib/validator');
 const createHash = require('../lib/hash');
+const sendMail = require('../lib/sendMail');
 const configs = require('../configs');
 require('../schemas/user');
 
@@ -30,6 +31,12 @@ class UserModel {
         role: userData.role
       });
 
+      await sendMail({
+        email: user.email,
+        password: randomPassword,
+        fullName: user.fullName
+      });
+      
       return generateResponseObject(true, null, {
         id: user._id,
         email: user.email,

@@ -15,5 +15,19 @@ module.exports = {
   },
   JWT: {
     SECRET: 'your_jwt_secret'
-  }
+  },
+  SMTP_PARAMS: {
+    service : 'Gmail',
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    tls: {
+      rejectUnauthorized: true
+    },
+    auth: {
+      user: "tonybomer11@gmail.com",
+      pass: "davmark11"
+    }
+  },
+  APP_EMAIL: 'tonybomer11@gmail.com'
 };
