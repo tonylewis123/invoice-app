@@ -36,12 +36,20 @@ class UserModel {
         password: randomPassword,
         fullName: user.fullName
       });
-      
-      return generateResponseObject(true, null, {
-        id: user._id,
-        email: user.email,
-        password: user.password
-      });
+
+      let users = await this.Users.find({ role: {$ne: 'superadmin'} }).select('_id fullName email role');
+      return generateResponseObject(true, null, users);
+
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async delete(userId){
+    try {
+      await this.Users.findByIdAndRemove(userId);
+      let users = await this.Users.find({ role: {$ne: 'superadmin'} }).select('_id fullName email role');
+      return generateResponseObject(true, null, users);
     } catch (error) {
       throw new Error(error.message);
     }
