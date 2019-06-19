@@ -14,10 +14,10 @@ function App() {
     <div className="App">
       <Route path={'/'} exact={true} component={Login}  />
       <Route path={'/login'} exact={true} component={Login}  />
-      <Route path={'/page1'} exact={true} component={Page1}  />
-      <Route path={'/Admin_page'} exact={true} component={Admin_page}  />
+      {/* <Route path={'/page1'} exact={true} component={Page1}  /> */}
+      {/* <Route path={'/Admin_page'} exact={true} component={Admin_page}  /> */}
       <Route path={'/Project'} exact={true} component={Project}  />
-      <Route path={'/super_admin_page'} exact={true} component={Super_admin_page} />
+      {/* <Route path={'/super_admin_page'} exact={true} component={Super_admin_page} /> */}
     </div>
   );
 }

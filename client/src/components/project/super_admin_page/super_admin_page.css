@@ -10,6 +10,7 @@
         width: 600px;
         margin: 0 auto;
     }
+    
     .fa-arrow-right {
         margin-left: 30px;
     }
@@ -18,6 +19,7 @@
         width: 100%;
         text-align: center;
     }
+    
     .add_new_project_btn button {
         width: 200px;
         height: 45px;
@@ -30,58 +32,95 @@
         border-radius: 20px;
         cursor: pointer;
     }
-    .fa-plus{
+    
+    .fa-plus {
         margin-right: 15px;
     }
-    .admin_page_inputs{
+    
+    .admin_page_inputs {
         width: 78%;
         margin: 0 auto 20px auto;
         display: flex;
         justify-content: space-between
     }
-    .admin_page_inputs_filtr{
+    
+    .admin_page_inputs_filtr {
         display: flex;
         align-items: center;
         width: 50%;
     }
-    .admin_page_inputs_filtr_2{
+    
+    .admin_page_inputs_filtr_2 {
         justify-content: flex-end
     }
-    .admin_page_inputs_filtr input{
+    
+    .admin_page_inputs_filtr input {
         width: 17px;
         height: 17px;
         margin-right: 15px;
         cursor: pointer;
     }
-    .admin_page_inputs_filtr p{
+    
+    .admin_page_inputs_filtr p {
         font-size: 18px;
     }
-    .admin_page_search{
+    
+    .sup_admin_page_search {
         width: 80%;
         margin: 0 auto 15px;
-        display: flex;
-        align-items: center;
     }
-    .admin_page_search input{
-        width: 85%;
+    .sup_admin_page_search p{
+        font-size: 16px;
+        color: red;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .sup_admin_page_search input {
+        width: 100%;
         height: 40px;
         background: #fff;
         border: 1px solid #E5E1E1;
         font-size: 16px;
         text-align: center
     }
-    .admin_page_search button{
-        width: 15%;
-        height: 40px;
-        background: #fff;
-        border: 1px solid #E5E1E1;
-        font-size: 18px;
-        cursor: pointer;
-
+    .user_table_content{
+        height: 400px;
+        overflow-y: auto;
     }
+    .users_list{
+        overflow: auto;
+        padding-bottom: 20px;
+        font-size: 16px;
+        margin: 0 auto;
+        width: 80%;
+        border-collapse: collapse;
+    }
+    .users_list tr {
+        position: relative;
+    }
+    .users_list td{
+        border-bottom: 1px solid #ccc; 
+        margin: 10px 0;
+        padding: 10px 5px;
+    }
+    .users_list button{
+        width: 100px;
+       height: 30px;
+       background-color: red;
+       color: #fff;
+       cursor: pointer;
+       border-radius: 10px;
+    }
+
+    
     .ui.default.dropdown:not(.button)>.text,
     .ui.dropdown:not(.button)>.default.text {
         color: #fff;
+    }
+    
+    .sup_admin_clear {
+        height: 40px;
     }
     
     @media screen and (max-width:767px) {
@@ -89,7 +128,7 @@
             width: 100%;
             margin: 0 auto;
         }
-        .admin_page_inputs_filtr input{
+        .admin_page_inputs_filtr input {
             width: 16px;
             height: 16px;
             margin-right: 10px;
