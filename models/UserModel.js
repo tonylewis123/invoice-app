@@ -51,6 +51,15 @@ class UserModel {
       throw new Error(error.message);
     }
   }
+
+  async getAllUsers(){
+    try {
+      let users = await this.Users.find({ role: {$ne: 'superadmin'} });
+      return generateResponseObject(true, null, users);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 module.exports = new UserModel();

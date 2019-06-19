@@ -8,6 +8,10 @@ const UserModel = require('../models/UserModel');
 router.post('/create_user', isSuperadmin, async (req, res) => {
   try {
     let result = await UserModel.create(req.body);
+    if(result.success){
+      let allUsers = await UserModel.getAllUsers();
+      res.status(200).json(allUsers);
+    }
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json(generateResponseObject(false, error.message, null));
