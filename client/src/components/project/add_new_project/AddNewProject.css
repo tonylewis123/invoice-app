@@ -1,0 +1,39 @@
+.new_project {
+    width: 100%;
+}
+.new_project_box{
+    width: 80%;
+    margin:  30px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+.new_project_box input{
+    width: 250px;
+    font-size: 18px;
+}
+.new_project_box p{
+    font-size: 20px;
+}
+.discrip_inp{
+    height: 80px;
+}
+@media screen and (max-width:767px) {
+    .new_project {
+        margin-top: 60px;
+    }
+    .new_project_box{
+        margin:  20px auto;
+        padding-bottom: 10px;
+    }
+    .new_project_box input{
+        width: 100px;
+        font-size: 16px;
+        height: 35px;
+    }
+    .new_project_box p{
+        font-size: 18px;
+    }
+}

@@ -1,9 +1,10 @@
 import React from 'react';
 import './admin_page.css';
-import Header from '../header/Header';
+import Header from '../header/Header.js';
 import background from "../../../assets/img/login_bg.png";
 import Projects_tests from "../project_tests/Projects_tests";
-import Next_btn from "../next_btn/Next_btn"
+import Next_btn from "../next_btn/Next_btn";
+import { NavLink } from "react-router-dom";
 
 
 export default class Admin_page extends React.Component {
@@ -19,7 +20,8 @@ export default class Admin_page extends React.Component {
                 <div className="admin_page_size">
                     <Header />
                     <div className="add_new_project_btn">
-                        <button><i class="fas fa-plus" i /> Add new project</button>
+                        
+                        <NavLink to={"/NewProject"}> <button><i className="fas fa-plus"  /> Add new project</button> </NavLink>
                     </div>
                     <div className="admin_page_inputs">
                         <div className="admin_page_inputs_filtr">
@@ -33,12 +35,13 @@ export default class Admin_page extends React.Component {
                     </div>
                     <div className="admin_page_search">
                     <input type="text" />
-                    <button><i class="fas fa-search"></i></button>
+                    <button><i className="fas fa-search" /></button>
                     </div>
                     <Projects_tests />
                     <Projects_tests />
                     <Projects_tests />
-                    <Next_btn />
+                    <NavLink to={"/page1"}><Next_btn /></NavLink>
+                    
                 </div>
             </div>
         )

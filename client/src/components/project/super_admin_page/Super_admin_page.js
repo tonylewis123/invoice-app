@@ -87,7 +87,9 @@ export default class Super_admin_page extends React.Component {
         if(!response.success){
             return this.setState({error: response.error});
         }
-        this.setState({users: response.data, error: '', });
+        email.value = '';
+        name.value = '';
+        this.setState({users: response.data, error: '',inputs:data });
     }
 
     deleteUser = async (userId) => {

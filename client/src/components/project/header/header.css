@@ -1,17 +1,20 @@
-.Header{
+.Header {
     width: 100%;
     padding: 100px 0 50px 0;
 }
-.header_size{
+
+.header_size {
     display: flex;
     justify-content: center;
 }
-.header_size_left{
+
+.header_size_left {
     width: 100px;
     height: 100px;
     margin-right: 30px;
 }
-.header_size_left img{
+
+.header_size_left img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -19,36 +22,82 @@
     border-radius: 100%;
     border: 2px solid #2A617E
 }
-.Employer_Name{
+
+.Employer_Name {
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 20px;
 }
-.Employer_info{
+
+.Employer_info {
     font-size: 20px;
 }
-@media screen and (max-width:767px){
-    .Header{
+
+/* Header Second */
+
+.HeaderSecond {
+    width: 100%;
+    padding: 20px 0 40px 0;
+}
+
+.sec_header_size_right {
+    text-align: center
+}
+
+.head_arrow_left {
+    font-size: 30px;
+    margin-left: 50px;
+    line-height: 0
+}
+
+.sec_head_tittle {
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 0
+}
+
+@media screen and (max-width:767px) {
+    .Header {
         width: 100%;
         padding: 60px 0 20px 0;
         background: #fff;
         border-bottom-left-radius: 100px;
         margin-bottom: 50px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
-    .header_size_left{
-        width: 70px;
-        height: 70px;
-        margin-right: 25px;
+    .HeaderSecond {
+        width: 100%;
+        padding: 40px 0 60px;
+        border-bottom-left-radius: 85px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        background-color: #2A617E;
+        color: #fff;
     }
-    .Employer_Name{
-        font-size: 28px;
+    .head_arrow_left {
+        font-size: 25px;
+        margin-left: 30px;
+        color: #fff !important
+    }
+    .fa-arrow-left:before {
+        content: "\f060";
+        color: #fff;
+    }
+    .sec_head_tittle {
+        font-size: 25px;
+    }
+    .header_size_left {
+        width: 60px;
+        height: 60px;
+        margin-right: 20px;
+    }
+    .Employer_Name {
+        font-size: 20px;
         font-weight: bold;
         margin-bottom: 20px;
     }
-    .Employer_info{
+    .Employer_info {
         font-size: 16px;
         color: #A49DA8
     }
-    
 }

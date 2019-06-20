@@ -26,7 +26,7 @@ const options = [
 ]
 
 const Projects_tests = () => (
-    <div>
+    <div className="ProjectTests">
         <Dropdown selection fluid options={options} placeholder='Projects' />
     </div>
 )
