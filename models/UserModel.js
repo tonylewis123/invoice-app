@@ -1,3 +1,6 @@
+const ProjectModel = require('./ProjectModel');
+const TaskModel = require('./TaskModel');
+
 const db = require('../database');
 const generateResponseObject = require('../lib/generateResponseObject');
 const generateRandomPassword = require('../lib/generateRandomPassword');
@@ -71,6 +74,22 @@ class UserModel {
     try {
       let users = await this.Users.find({ role: {$ne: 'superadmin'} }).select('_id fullName email role');
       return generateResponseObject(true, null, users);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async createProject(creatorId, projectData){
+    try {
+      let creator = await this.Users.findOne({ _id: creatorId }).select('-password');
+      if(creator === null){
+        return generateResponseObject(false, 'User does not exists', null);
+      }
+      let newProject = await ProjectModel.create(creatorId, projectData);
+      creator.projects.push(newProject._id);
+      creator = await creator.save();
+      creator = await this.Users.populate(creator, {path:"projects"});
+      return generateResponseObject(true, null, creator);
     } catch (error) {
       throw new Error(error.message);
     }
