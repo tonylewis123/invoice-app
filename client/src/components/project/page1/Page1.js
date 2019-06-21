@@ -19,6 +19,7 @@ export default class Page1 extends React.Component {
                 <div className="page1_size">
                     <Header />
                     <Projects_tests />
+                    <div className="page1_clear_top"></div>
                     <div className="next_btn_div">
                     <button className="next_btn">next <i className="fas fa-arrow-right" /> </button>
                     </div>

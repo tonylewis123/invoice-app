@@ -10,7 +10,6 @@
     border: none;
     outline: none;
     color: #fff !important;
-    margin: 100px auto 0;
     font-size: 30px;
     font-weight: bold;
     border-radius: 20px;
@@ -20,7 +19,6 @@
     .next_btn {
         width: 130px;
         height: 42px;
-        margin: 100px auto 0;
         font-size: 20px;
     }
 }
