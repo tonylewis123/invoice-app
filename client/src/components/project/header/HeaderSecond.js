@@ -7,7 +7,7 @@ export default class HeaderSecond extends React.Component {
           super(props);
           this.state = {
               userName: "",
-              userInfo: "lorem ipsum dolor"
+              userInfo: ""
           }
       }
 
@@ -18,7 +18,6 @@ export default class HeaderSecond extends React.Component {
                         <div className="sec_header_size_left">
                             <p className="head_arrow_left">
                                 <NavLink to={this.props.loc}><i className="fas fa-arrow-left" /></NavLink>
-                                
                                 </p>
                         </div>
                         <div className="sec_header_size_right">

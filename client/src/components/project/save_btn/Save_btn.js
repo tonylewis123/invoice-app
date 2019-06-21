@@ -1,10 +1,10 @@
 import React from 'react';
 import './save_btn.css';
 
-export default function Save_btn (props){
+export default  props => {
         return(
             <div className="next_btn_div">
-            <button className="next_btn">save </button>
+            <button onClick={props.btnClick} className="next_btn">Save </button>
             </div>
         )
 }

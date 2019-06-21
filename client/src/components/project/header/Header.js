@@ -9,7 +9,7 @@ export default class Header extends React.Component {
           super(props);
           this.state = {
               userName: "",
-              userInfo: "lorem ipsum dolor"
+              userInfo: ""
           }
       }
       async componentDidMount(){

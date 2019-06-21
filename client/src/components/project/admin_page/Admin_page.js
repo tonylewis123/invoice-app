@@ -40,7 +40,10 @@ export default class Admin_page extends React.Component {
                     <Projects_tests />
                     <Projects_tests />
                     <Projects_tests />
+                    <div className="admin_p_clear_top">
                     <NavLink to={"/page1"}><Next_btn /></NavLink>
+                    </div>
+
                     
                 </div>
             </div>
