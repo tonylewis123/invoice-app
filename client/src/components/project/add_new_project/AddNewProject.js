@@ -7,11 +7,13 @@ import { NavLink } from "react-router-dom";
 import { Input } from 'semantic-ui-react';
 import Next_btn from "../next_btn/Next_btn";
 import Save_btn from "../save_btn/Save_btn";
-import { POST } from '../../../core/CRUD';
+import { POST, GET } from '../../../core/CRUD';
 import { async } from 'q';
 
-
+var curr = new Date();
+curr.setDate(curr.getDate());
 export default class AddNewProject extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +33,7 @@ export default class AddNewProject extends React.Component {
                     label: "Project Date",
                     isTuched: false,
                     isValid: false,
-                    value: "",
+                    value: curr.toISOString().substr(0, 10),
                     validation: {
                         required: true,
                         email: true
@@ -50,8 +52,24 @@ export default class AddNewProject extends React.Component {
                     massage: 'Please enter description'
                 }
             ],
-            error: ""
+            error: "",
+            projects: []
         }
+    }
+
+    async componentDidMount(){
+        let userId = localStorage.getItem('userId');
+        if(!userId){
+            return window.location.href = '/login';
+        }
+        let response = await GET(`api/users/${userId}`);
+        if(!response.success){
+            if(response.statusCode == 401){
+                return window.location.href = '/login';
+            }
+            return this.setState({error: response.error});
+        }
+        this.setState({projects: response.data.projects.reverse()});
     }
 
 
@@ -74,62 +92,70 @@ export default class AddNewProject extends React.Component {
         this.setState({ inputs })
 
     }
-    saveProject = async (data) => {
-        let name = data[0].value;
-        let date = data[1].value;
-        let description = data[1].value;
+    saveProject = async () => {
+        let inputs = [...this.state.inputs];
+        let name = inputs[0].value;
+        let date = inputs[1].value;
+        let description = inputs[2].value;
 
-        if (!name.value || !date.value || !description.value) {
+        if (name === '' || date === '' || description === '') {
             return this.setState({ error: 'All fields are required!' });
         }
 
-        let response = await POST('api/auth/login', {
-            name: name.value,
-            date: date.value,
-            description: description.value
+        let response = await POST('api/users/createProject', {
+            name: name,
+            date: date,
+            description: description
         });
-        
-        if(!response.success){
-            return this.setState({error: response.error});
+
+        console.log(response.data.projects);
+
+        if (!response.success) {
+            return this.setState({ error: response.error });
         }
-        name.value = '';
-        description.value = '';
-        this.setState({ error: '',inputs:data });
+        name = '';
+        description = '';
+        this.setState({ projects: response.data.projects.reverse(), error: '', inputs });
+        console.log(this.state.projects);
     }
+
+    generateProjectsItem = data => {
+        return data.map((item, index) => {
+            return ( <Projects_tests name={item.name} key={index} /> )
+        })
+    }
+
+
     render() {
         let background_page = {
             backgroundImage: `url(${background})`,
         }
-        var curr = new Date();
-        curr.setDate(curr.getDate() + 3);
-        var date = curr.toISOString().substr(0, 10);
+
         return (
             <div className="Admin_page" style={background_page}>
                 <div className="admin_page_size">
                     <HeaderSecond name="New Project" loc="/Admin_page" />
                     <div className="new_project">
                         <div className="new_project_box">
-                            <p>Project Name{console.log(this.state.inputs[0].isValid)}</p>
-                            <Input type="text" onChange={event => this.inputValue(event.target.value, 0)} />
+                            <p>Project Name</p>
+                            <Input type="text" onChange={event => this.inputValue(event.target.value, 0)} value={this.state.inputs[0].value} />
                         </div>
                         <p className="error_message">{this.state.inputs[0].isTuched && !this.state.inputs[0].isValid ? this.state.inputs[0].massage : ''}</p>
                         <div className="new_project_box">
                             <p>Project Date</p>
-                            <Input type="date" defaultValue={date} onChange={event => this.inputValue(event.target.value, 1)} />
+                            <Input type="date" defaultValue={this.state.inputs[1].value} onChange={event => this.inputValue(event.target.value, 1)} />
                         </div>
                         <p className="error_message">{this.state.inputs[1].isTuched && !this.state.inputs[1].isValid ? this.state.inputs[1].massage : ''}</p>
                         <div className="new_project_box">
                             <p>Description</p>
-                            <Input type="text" className="discrip_inp" onChange={event => this.inputValue(event.target.value, 2)} />
+                            <Input type="text" className="discrip_inp" onChange={event => this.inputValue(event.target.value, 2)} value={this.state.inputs[2].value} />
                         </div>
                         <p className="error_message">{this.state.inputs[2].isTuched && !this.state.inputs[2].isValid ? this.state.inputs[2].massage : ''}</p>
                     </div>
                     <div className="addNewPrClear_top" >
-                        <Save_btn btnClick={() => this.saveProject(this.state.inputs)} />
+                        <Save_btn btnClick={this.saveProject} />
                     </div>
-
-                    <Projects_tests />
-                    <Projects_tests />
+                    {this.state.projects.length > 0 ? this.generateProjectsItem(this.state.projects) : ""}
 
                     <div className="addNewPrClear_bottom">
                         <NavLink to={"/page1"}><Next_btn /></NavLink>
