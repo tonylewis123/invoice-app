@@ -60,7 +60,10 @@ class UserModel {
 
   async getUserById(id){
     try {
-      let user = await this.Users.findOne({_id: id}).select('-password');
+      let user = await this.Users.findOne({_id: id})
+          .select('-password')
+          .populate('projects')
+          .exec();
       if(user === null){
         return generateResponseObject(false, 'User does not exists', null);
       }

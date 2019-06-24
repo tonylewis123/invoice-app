@@ -15,6 +15,7 @@ router.post('/createProject', isAdmin, async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+  console.log(req.user);
   try {
     let result = await UserModel.getUserById(req.params.id);
     res.status(200).json(result);
