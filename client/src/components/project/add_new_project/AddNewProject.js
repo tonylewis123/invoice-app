@@ -8,7 +8,7 @@ import { Input } from 'semantic-ui-react';
 import Next_btn from "../next_btn/Next_btn";
 import Save_btn from "../save_btn/Save_btn";
 import { POST, GET } from '../../../core/CRUD';
-import { async } from 'q';
+import moment from "moment";
 
 var curr = new Date();
 curr.setDate(curr.getDate());
@@ -57,19 +57,19 @@ export default class AddNewProject extends React.Component {
         }
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         let userId = localStorage.getItem('userId');
-        if(!userId){
+        if (!userId) {
             return window.location.href = '/login';
         }
         let response = await GET(`api/users/${userId}`);
-        if(!response.success){
-            if(response.statusCode == 401){
+        if (!response.success) {
+            if (response.statusCode == 401) {
                 return window.location.href = '/login';
             }
-            return this.setState({error: response.error});
+            return this.setState({ error: response.error });
         }
-        this.setState({projects: response.data.projects.reverse()});
+        this.setState({ projects: response.data.projects.reverse() });
     }
 
 
@@ -121,11 +121,18 @@ export default class AddNewProject extends React.Component {
 
     generateProjectsItem = data => {
         return data.map((item, index) => {
-            return ( <Projects_tests name={item.name} key={index} /> )
+            return (
+                <div key={index}>
+                    <div className="project_info">
+                        <p>{moment(item.created_at).format('L')}</p>
+                        <p>dfgdfg</p>
+                        
+                    </div>
+                    <Projects_tests data={item}  />
+                </div>
+            )
         })
     }
-
-
     render() {
         let background_page = {
             backgroundImage: `url(${background})`,

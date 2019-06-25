@@ -1,0 +1,13 @@
+.taskInformation{
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto 20px auto;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #B1B1B1;
+    font-size: 18px;
+}
+.firstProject_clear{
+    height: 40px;
+    width: 100%;
+}

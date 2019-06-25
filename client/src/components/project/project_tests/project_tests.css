@@ -1,10 +1,13 @@
 .ProjectTests{
-    margin: 5px 0;
+    margin: 5px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
 }
 .ui.fluid.dropdown {
     display: block;
-    width: 80%;
-    margin: 0 auto;
+    width: 90%;
     background: #2A617E;
     font-size: 20px;
     color: #fff;
@@ -37,4 +40,15 @@
 }
 .ui.dropdown .menu {
     z-index: auto;
+}
+.fa-arrow-circle-right:before {
+    content: "\f0a9";
+    font-size: 30px;
+    color: #2A617E;
+    cursor: pointer
+}
+@media screen and (max-width:450px){
+    .fa-arrow-circle-right:before {
+        margin-left: 10px;
+    }
 }
