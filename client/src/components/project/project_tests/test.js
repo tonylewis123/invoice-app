@@ -12,7 +12,6 @@ class Test extends React.Component{
                 <p>text text</p>
                 <p>add task</p>
                 </div>
-
             </div>
         )
     }

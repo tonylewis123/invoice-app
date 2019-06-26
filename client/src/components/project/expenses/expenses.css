@@ -1,0 +1,38 @@
+.Expenses{
+    width: 100%;
+}
+.Expenses .ui.fluid.dropdown {
+    display: block;
+    width: 80%;
+    background: #C3BDBD;
+    font-size: 20px;
+    color: #fff;
+    height: 60px;
+    margin: 5px auto ;
+    border: none;
+}
+.ui.selection.dropdown .menu>.item {
+    font-size: 18px;
+}
+.ExpensesInfo .new_project{
+    margin-top: 0;
+}
+.materialsCost{
+    display: flex;
+    align-items: center
+}
+.fa-pencil-alt{
+    margin-left: 15px;
+}
+@media screen and (max-width:450px){
+    .Expenses .ui.fluid.dropdown {
+        display: block;
+        width: 100%;
+        background: #C3BDBD;
+        font-size: 20px;
+        color: #fff;
+        height: 35px;
+        margin: 5px auto ;
+    }
+
+}

@@ -6,7 +6,9 @@ import {Route,NavLink} from "react-router-dom";
 import Admin_page from "./components/project/admin_page/Admin_page";
 import Project from "./components/project/Project";
 import Super_admin_page from './components/project/super_admin_page/Super_admin_page';
-import AddNewProject from "./components/project/add_new_project/AddNewProject"
+import AddNewProject from "./components/project/add_new_project/AddNewProject";
+import FirstProject from "./components/project/first_project/First_project";
+import NewTask from "./components/project/new_task/NewTask"
 
 
 
@@ -19,7 +21,8 @@ function App() {
       <Route path={'/Admin_page'} exact={true} component={Admin_page}  />
       <Route path={'/Project'} exact={true} component={Project}  />
       <Route path={'/NewProject'} exact={true} component={AddNewProject}  />
-      {/* <Route path={'/super_admin_page'} exact={true} component={Super_admin_page} /> */}
+      <Route path={'/single_project/:id'} exact={true} component={FirstProject} /> 
+      <Route path={'/New_task'} exact={true} component={NewTask} /> 
     </div>
   );
 }
