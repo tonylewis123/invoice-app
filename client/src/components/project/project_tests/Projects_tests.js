@@ -30,7 +30,6 @@ class Projects_tests extends React.Component  {
        </div>
         )
       }
-      
 }
 
 

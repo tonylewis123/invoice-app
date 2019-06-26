@@ -12,25 +12,34 @@ export default class FirstProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // projectId: window.location.pathname.split('/')[2]
+                    project: {},
+                    error: "",
         }
     }
 
-    // async componentDidMount() {
-    //     const values = queryString.parse(this.props.location.search);
-    //     console.log(values.projectId, '======');
-    //     // let response = await GET(`api/users/`);
+    async componentDidMount() {
+        let projectId = window.location.href.split("/").pop();
+         let response = await GET(`api/projects/${projectId}`);
+         if (!response.success) {
+            if (response.statusCode == 401) {
+                return window.location.href = '/login';
+            }
+            return this.setState({ error: response.error });
+        }
+        this.setState({ project: response.data });
+         
         
-    // }
+    }
 
     render() {
+        
         let background_page = {
             backgroundImage: `url(${background})`,
         }
         return (
             <div className="Admin_page" style={background_page}>
                 <div className="admin_page_size">
-                    <HeaderSecond name="Project Name" loc="/Admin_page" />
+                    <HeaderSecond name={this.state.project.name} loc="/Admin_page" />
                     <div className="add_new_project_btn">
 
                         <NavLink to={"/New_task"}> <button><i className="fas fa-plus" /> Add new task</button> </NavLink>

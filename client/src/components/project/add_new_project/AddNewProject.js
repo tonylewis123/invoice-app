@@ -125,7 +125,7 @@ export default class AddNewProject extends React.Component {
                 <div key={index}>
                     <div className="project_info">
                         <p>{moment(item.created_at).format('L')}</p>
-                        <p>dfgdfg</p>
+                        <p>{item.projectId}</p>
                         
                     </div>
                     <Projects_tests data={item}  />
