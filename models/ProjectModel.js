@@ -25,6 +25,18 @@ class ProjectModel {
       throw new Error(error.message);
     }
   }
+
+  async getProjectById(id){
+    try {
+      let project = await this.Projects.findById(id)
+          .populate('tasks')
+          .exec();
+
+      return generateResponseObject(true, null, project);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 module.exports = new ProjectModel();
