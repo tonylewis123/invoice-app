@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 const ProjectSchema = new Schema({
   name: String,
   description: String,
+  projectId: {
+    type: String,
+    required: true
+  },
   created_at: {
     type: Date,
     default: new Date()

@@ -2,6 +2,7 @@ const moment = require('moment');
 const db = require('../database');
 const generateResponseObject = require('../lib/generateResponseObject');
 const validate = require('../lib/validator');
+const projectIdGenerator = require('../lib/projectIdGenerator');
 require('../schemas/project');
 
 class ProjectModel {
@@ -11,11 +12,13 @@ class ProjectModel {
 
   async create(creatorId, projectData){
     try {
+      let lastProject = await this.Projects.find().sort({projectId: -1}).limit(1);
       let project = await this.Projects.create({
         name: projectData.name,
         description: projectData.description,
         created_at: moment(projectData.date).format("L"),
-        author: creatorId
+        author: creatorId,
+        projectId: projectIdGenerator("AAA", lastProject[0])
       });
       return project;
     } catch (error) {
