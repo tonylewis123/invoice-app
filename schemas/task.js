@@ -7,6 +7,7 @@ const TaskSchema = new Schema({
     type: Number,
     default: 0
   },
+  taskDate: Date,
   created_at: {
     type: Date,
     default: new Date()
@@ -18,7 +19,8 @@ const TaskSchema = new Schema({
   project: {
     type: Schema.Types.ObjectId,
     ref: 'projects'
-  }
+  },
+  expenses: []
 });
 
 module.exports = mongoose.model('tasks', TaskSchema);

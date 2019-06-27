@@ -1,5 +1,5 @@
 const ProjectModel = require('./ProjectModel');
-const TaskModel = require('./TaskModel');
+const TasksModel = require('./TasksModel');
 
 const db = require('../database');
 const generateResponseObject = require('../lib/generateResponseObject');

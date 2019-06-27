@@ -4,6 +4,7 @@ const authRouter = require('../auth/authRouter');
 const adminRouter = require('./adminRouter');
 const usersRouter = require('./usersRouter');
 const projectsRouter = require('./projectsRouter');
+const tasksRouter = require('./tasksRouter');
 
 class Api {
   initializeApp(app){
@@ -11,6 +12,7 @@ class Api {
     app.use('/api/admin', isAuthenticate, isSuperadmin, adminRouter);
     app.use('/api/users', isAuthenticate, usersRouter);
     app.use('/api/projects', isAuthenticate, projectsRouter);
+    app.use('/api/tasks', isAuthenticate, tasksRouter);
   }
 }
 
