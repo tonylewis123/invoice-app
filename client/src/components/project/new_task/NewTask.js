@@ -15,6 +15,7 @@ export default class newTask extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            project : [],
             inputs: [
                 {
                     label: "Task Date",
@@ -84,11 +85,59 @@ export default class newTask extends React.Component {
                 },
             ],
             error: "",
-            expenses: []
+            expenses: [],
+            show_expenses: false,
+            clickCount : 1
         }
     }
 
 
+    async componentDidMount() {
+        let urlData = window.location.href.split("/");
+        let projectId = urlData[urlData.length-2];
+        
+         let response = await GET(`api/projects/${projectId}`);
+         if (!response.success) {
+            if (response.statusCode == 401) {
+                return window.location.href = '/login';
+            }
+            return this.setState({ error: response.error });
+        }
+        
+        this.setState({ project: response.data });
+         
+        
+    }
+
+    saveTask = async () => {
+        let inputs = [...this.state.inputs];
+        let taskDate = inputs[0].value;
+        let hours = inputs[1].value;
+        let description = inputs[2].value;
+        
+        let expenses = this.state.expenses.map(item => {
+            
+            return {
+                supplier: item.supplier,
+                materialsCost: item.materials_cost,
+                materialsDescription: item.materials_description
+            };
+        });
+
+        if (taskDate === '' || hours === '' || description === '' ) {
+            return this.setState({ error: 'All fields are required!' });
+        }
+
+        let response = await POST('api/tasks', {
+            taskDate: taskDate,
+            hours: hours,
+            description: description,
+            expenses: expenses,
+            projectId: this.state.project._id
+        });
+        console.log(response, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        
+    }
     inputValue = (value, index) => {
         let inputs = this.state.inputs;
         let input = inputs[index];
@@ -107,6 +156,29 @@ export default class newTask extends React.Component {
         input.value = value;
         this.setState({ inputs })
 
+    }
+    show_expensesInp = () =>{
+        this.setState({
+            show_expenses: true,
+        })
+        if(this.state.inputs[4].isValid && this.state.inputs[5].isValid){ 
+            let expenses = [...this.state.expenses]
+            let exp =  {
+                supplier: this.state.inputs[3].value,
+                materials_cost: this.state.inputs[4].value,
+                materials_description: this.state.inputs[5].value,
+                expId: this.state.clickCount
+             }
+            expenses.push(exp);
+            let inputs =  this.state.inputs;
+            inputs[4].value = '';
+            inputs[5].value = '';
+          return  this.setState({
+                clickCount:this.state.clickCount+1,
+                 expenses,  
+                 inputs
+            })
+        }
     }
 
     render() {
@@ -127,7 +199,7 @@ export default class newTask extends React.Component {
                         <p className="error_message">{this.state.inputs[1].isTuched && !this.state.inputs[1].isValid ? this.state.inputs[1].massage : ''}</p>
                         <div className="new_project_box">
                             <p>Hours</p>
-                            <Input type="text" onChange={event => this.inputValue(event.target.value, 1)} value={this.state.inputs[1].value} />
+                            <Input type="number" onChange={event => this.inputValue(event.target.value, 1)} value={this.state.inputs[1].value} />
                         </div>
                         <p className="error_message">{this.state.inputs[2].isTuched && !this.state.inputs[2].isValid ? this.state.inputs[2].massage : ''}</p>
                         <div className="new_project_box">
@@ -136,19 +208,23 @@ export default class newTask extends React.Component {
                         </div>
 
                         <div className="create_expenses_box" >
-                            <div className="create_expenses">
+                            <div className="create_expenses" onClick={this.show_expensesInp}>
                                 <p> <i className="fas fa-plus" /></p>
                                 <p className="create_expenses_tittle">Expenses</p>
                             </div>
                         </div>
 
                     </div>
-                    <div className="new_project">
+                   
+                    {this.state.show_expenses ?  <div className="new_project">
                         <div className="new_project_box">
                             <p>Supplier</p>
-                            <select>
+                            <select onChange={event => this.inputValue(event.target.value, 3)} value={this.state.inputs[3].value}>
                                 <option>
                                     Haymans
+                                </option>
+                                <option>
+                                    Hsdfdfdfdf
                                 </option>
                             </select>
                         </div>
@@ -163,11 +239,16 @@ export default class newTask extends React.Component {
                             <Input type="text" onChange={event => this.inputValue(event.target.value, 5)} value={this.state.inputs[5].value} />
                         </div>
 
-                    </div>
-                    <Expenses />
-                    <Expenses />
+                    </div> : ""}
+
+                    
+                    {this.state.expenses.map((item, index)=>{
+                         return (
+                            <Expenses key={index} element={item} />
+                         )
+                    })}
                     <div className="newTask_clear"></div>
-                    <Save_btn />
+                    <Save_btn  btnClick={this.saveTask} />
                     <div className="newTask_clear"></div>
                 </div>
             </div>
