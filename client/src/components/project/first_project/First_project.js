@@ -26,6 +26,7 @@ export default class FirstProject extends React.Component {
             }
             return this.setState({ error: response.error });
         }
+        console.log(response.data);
         this.setState({ project: response.data });
          
         
@@ -42,7 +43,7 @@ export default class FirstProject extends React.Component {
                     <HeaderSecond name={this.state.project.name} loc="/Admin_page" />
                     <div className="add_new_project_btn">
 
-                        <NavLink to={"/New_task"}> <button><i className="fas fa-plus" /> Add new task</button> </NavLink>
+                        <NavLink to={`/single_project/${this.state.project._id}/New_task`}> <button><i className="fas fa-plus" /> Add new task</button> </NavLink>
                     </div>
                     <div className="admin_page_search">
                         <input type="text" />
