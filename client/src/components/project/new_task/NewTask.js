@@ -5,7 +5,8 @@ import background from "../../../assets/img/login_bg.png";
 import { Input } from 'semantic-ui-react';
 import Save_btn from "../save_btn/Save_btn";
 import { POST, GET } from '../../../core/CRUD';
-import Expenses from "../expenses/Expenses"
+import Expenses from "../expenses/Expenses";
+import { NavLink } from "react-router-dom";
 
 var curr = new Date();
 curr.setDate(curr.getDate());
@@ -18,6 +19,17 @@ export default class newTask extends React.Component {
             project : [],
             inputs: [
                 {
+                    label: "Task Name",
+                    isTuched: false,
+                    isValid: false,
+                    value: "",
+                    validation: {
+                        required: true,
+                        email: true
+                    },
+                    massage: 'Please enter name'
+                },
+                    {
                     label: "Task Date",
                     isTuched: false,
                     isValid: false,
@@ -111,9 +123,10 @@ export default class newTask extends React.Component {
 
     saveTask = async () => {
         let inputs = [...this.state.inputs];
-        let taskDate = inputs[0].value;
-        let hours = inputs[1].value;
-        let description = inputs[2].value;
+        let taskName = inputs[0].value;
+        let taskDate = inputs[1].value;
+        let hours = inputs[2].value;
+        let description = inputs[3].value;
         
         let expenses = this.state.expenses.map(item => {
             
@@ -124,11 +137,12 @@ export default class newTask extends React.Component {
             };
         });
 
-        if (taskDate === '' || hours === '' || description === '' ) {
+        if (taskName === '' || taskDate === '' || hours === '' || description === '' ) {
             return this.setState({ error: 'All fields are required!' });
         }
 
         let response = await POST('api/tasks', {
+            taskName: taskName,
             taskDate: taskDate,
             hours: hours,
             description: description,
@@ -161,18 +175,18 @@ export default class newTask extends React.Component {
         this.setState({
             show_expenses: true,
         })
-        if(this.state.inputs[4].isValid && this.state.inputs[5].isValid){ 
+        if(this.state.inputs[5].isValid && this.state.inputs[6].isValid){ 
             let expenses = [...this.state.expenses]
             let exp =  {
-                supplier: this.state.inputs[3].value,
-                materials_cost: this.state.inputs[4].value,
-                materials_description: this.state.inputs[5].value,
+                supplier: this.state.inputs[4].value,
+                materials_cost: this.state.inputs[5].value,
+                materials_description: this.state.inputs[6].value,
                 expId: this.state.clickCount
              }
             expenses.push(exp);
             let inputs =  this.state.inputs;
-            inputs[4].value = '';
             inputs[5].value = '';
+            inputs[6].value = '';
           return  this.setState({
                 clickCount:this.state.clickCount+1,
                  expenses,  
@@ -193,18 +207,23 @@ export default class newTask extends React.Component {
                     <div className="new_project">
                         <p className="error_message">{this.state.inputs[0].isTuched && !this.state.inputs[0].isValid ? this.state.inputs[0].massage : ''}</p>
                         <div className="new_project_box">
-                            <p>Task Date</p>
-                            <Input type="date" defaultValue={this.state.inputs[0].value} onChange={event => this.inputValue(event.target.value, 0)} />
+                            <p>Task Name</p>
+                            <Input type="text" defaultValue={this.state.inputs[0].value} onChange={event => this.inputValue(event.target.value, 0)} />
                         </div>
                         <p className="error_message">{this.state.inputs[1].isTuched && !this.state.inputs[1].isValid ? this.state.inputs[1].massage : ''}</p>
                         <div className="new_project_box">
-                            <p>Hours</p>
-                            <Input type="number" onChange={event => this.inputValue(event.target.value, 1)} value={this.state.inputs[1].value} />
+                            <p>Task Date</p>
+                            <Input type="date" defaultValue={this.state.inputs[1].value} onChange={event => this.inputValue(event.target.value, 1)} />
                         </div>
                         <p className="error_message">{this.state.inputs[2].isTuched && !this.state.inputs[2].isValid ? this.state.inputs[2].massage : ''}</p>
                         <div className="new_project_box">
+                            <p>Hours</p>
+                            <Input type="number" onChange={event => this.inputValue(event.target.value, 2)} value={this.state.inputs[2].value} />
+                        </div>
+                        <p className="error_message">{this.state.inputs[3].isTuched && !this.state.inputs[3].isValid ? this.state.inputs[3].massage : ''}</p>
+                        <div className="new_project_box">
                             <p>Description</p>
-                            <Input type="text" className="discrip_inp" onChange={event => this.inputValue(event.target.value, 2)} value={this.state.inputs[2].value} />
+                            <Input type="text" className="discrip_inp" onChange={event => this.inputValue(event.target.value, 3)} value={this.state.inputs[3].value} />
                         </div>
 
                         <div className="create_expenses_box" >
@@ -219,24 +238,27 @@ export default class newTask extends React.Component {
                     {this.state.show_expenses ?  <div className="new_project">
                         <div className="new_project_box">
                             <p>Supplier</p>
-                            <select onChange={event => this.inputValue(event.target.value, 3)} value={this.state.inputs[3].value}>
+                            <select onChange={event => this.inputValue(event.target.value, 4)} value={this.state.inputs[4].value}>
                                 <option>
-                                    Haymans
+                                    1
                                 </option>
                                 <option>
-                                    Hsdfdfdfdf
+                                   2
+                                </option>
+                                <option>
+                                   3
                                 </option>
                             </select>
                         </div>
-                        <p className="error_message">{this.state.inputs[4].isTuched && !this.state.inputs[4].isValid ? this.state.inputs[4].massage : ''}</p>
-                        <div className="new_project_box">
-                            <p>Materials cost</p>
-                            <Input type="text" onChange={event => this.inputValue(event.target.value, 4)} value={this.state.inputs[4].value} />
-                        </div>
                         <p className="error_message">{this.state.inputs[5].isTuched && !this.state.inputs[5].isValid ? this.state.inputs[5].massage : ''}</p>
                         <div className="new_project_box">
-                            <p>Materials description</p>
+                            <p>Materials cost</p>
                             <Input type="text" onChange={event => this.inputValue(event.target.value, 5)} value={this.state.inputs[5].value} />
+                        </div>
+                        <p className="error_message">{this.state.inputs[6].isTuched && !this.state.inputs[6].isValid ? this.state.inputs[6].massage : ''}</p>
+                        <div className="new_project_box">
+                            <p>Materials description</p>
+                            <Input type="text" onChange={event => this.inputValue(event.target.value, 6)} value={this.state.inputs[6].value} />
                         </div>
 
                     </div> : ""}

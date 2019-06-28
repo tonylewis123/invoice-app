@@ -1,16 +1,39 @@
 import React from 'react';
 import "./expenses.css";
-
+import { POST, GET } from '../../../core/CRUD';
 
 
 
 class ExpensesInfo extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+
+
+         this.state = {
+             error: "",
+             project: {},
+         }
+    }
+
+    async componentDidMount() {
+        let urlData = window.location.href.split("/");
+        let projectId = urlData[urlData.length-2];
+        
+         let response = await GET(`api/projects/${projectId}`);
+         if (!response.success) {
+            if (response.statusCode == 401) {
+                return window.location.href = '/login';
+            }
+            return this.setState({ error: response.error });
+        }
+        
+        this.setState({ project: response.data });
+        console.log(response);
+           
+        
     }
 
     defaultclick = event => {
-        // event.preventDefault();
         event.stopPropagation();
     }
 
@@ -25,17 +48,17 @@ class ExpensesInfo extends React.Component {
                             {typeof this.props.element !== 'undefined' ? this.props.element.supplier : ''}
                                 </option>
                             <option>
-                                Haymans
+                                2
                                 </option>
                             <option>
-                                Haymans
+                                3
                                 </option>
                         </select>
                     </div>
-                    {console.log(this.props)
-                    }
+                   
+                    
                     <div className="new_project_box">
-                        <p>Materials cost</p>
+                        <p>Materials <br /> cost</p>
                         <div className="materialsCost">
                             <p>{typeof this.props.element !== 'undefined' ? this.props.element.materials_cost : ''}</p>
                             <p><i className="fas fa-pencil-alt" /></p>
@@ -43,7 +66,7 @@ class ExpensesInfo extends React.Component {
                     </div>
 
                     <div className="new_project_box">
-                        <p>Materials description</p>
+                        <p>Materials <br /> description</p>
                         <div className="materialsCost">
                             <p>{typeof this.props.element !== 'undefined' ? this.props.element.materials_description : ''}</p>
                             <p ><i className="fas fa-pencil-alt" /></p>

@@ -8,7 +8,8 @@ import Project from "./components/project/Project";
 import Super_admin_page from './components/project/super_admin_page/Super_admin_page';
 import AddNewProject from "./components/project/add_new_project/AddNewProject";
 import FirstProject from "./components/project/first_project/First_project";
-import NewTask from "./components/project/new_task/NewTask"
+import NewTask from "./components/project/new_task/NewTask";
+import SingleTask from "./components/project/single_task/SingleTask"
 
 
 
@@ -23,6 +24,7 @@ function App() {
       <Route path={'/NewProject'} exact={true} component={AddNewProject}  />
       <Route path={'/single_project/:id'} exact={true} component={FirstProject} /> 
       <Route path={'/single_project/:id/New_task'} exact={true} component={NewTask} /> 
+      <Route path={'/single_project/:id/SingleTask'} exact={true} component={SingleTask} /> 
     </div>
   );
 }

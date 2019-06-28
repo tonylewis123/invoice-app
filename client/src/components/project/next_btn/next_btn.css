@@ -16,6 +16,9 @@
     border-radius: 20px;
     cursor: pointer;
 }
+.fa-arrow-left{
+    margin-right: 30px
+}
 @media screen and (max-width:767px) {
     .next_btn {
         width: 130px;

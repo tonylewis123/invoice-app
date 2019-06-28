@@ -1,0 +1,11 @@
+.descript_info{
+    width: 100%;
+    font-size: 16px !important;
+    margin-top: 20px;
+}
+@media screen and (max-width:767px) {
+    .descript_info{
+        font-size: 14px !important;
+        margin-top: 10px;
+    }
+}
