@@ -2,7 +2,7 @@ import React from 'react';
 import { Dropdown, Header } from 'semantic-ui-react';
 import "./expenses.css";
 import {NavLink} from "react-router-dom";
-import ExpensesInfo from "./Expenses_info"
+import ExpensesInfo from "./Expenses_info";
  
 
 
@@ -29,7 +29,7 @@ class Expenses extends React.Component  {
         ]
         return(
           <div className="Expenses">
-          <Dropdown selection fluid options={options} placeholder={this.props.element.expId>0 ? this.state.ExpensesName + " (" + this.props.element.expId  + ")"  : this.state.ExpensesName  } />
+          <Dropdown selection fluid options={options} placeholder={this.props.element.expId>1 ? this.state.ExpensesName + " (" + this.props.element.expId  + ")"  : this.state.ExpensesName  } />
        </div>
         )
       }
