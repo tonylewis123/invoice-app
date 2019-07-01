@@ -49,7 +49,9 @@ class TasksModel {
       return generateResponseObject(false, "Please send valid Object Id", null);
     }
     try {
-      let task = await this.Tasks.findById(id);
+      let task = await this.Tasks.findById(id)
+            .populate('author')
+            .populate('project');
       if(task == null){
         return generateResponseObject(false, "Task does not exists!", null);
       }
