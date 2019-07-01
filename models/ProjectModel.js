@@ -31,7 +31,9 @@ class ProjectModel {
       let project = await this.Projects.findById(id)
           .populate('tasks')
           .exec();
-
+      if(project === null){
+        return generateResponseObject(false, "Project does not exists!", null);
+      }
       return generateResponseObject(true, null, project);
     } catch (error) {
       throw new Error(error.message);

@@ -17,7 +17,8 @@ class TasksModel {
         hours: taskData.hours,
         description: taskData.description,
         author: creatorId,
-        project: taskData.projectId
+        project: taskData.projectId,
+        name: taskData.name
       });
 
       let project = await this.Projects.findOne({_id: taskData.projectId});
