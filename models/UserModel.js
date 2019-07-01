@@ -68,8 +68,8 @@ class UserModel {
         return generateResponseObject(false, 'User does not exists', null);
       }
       if(user.role === 'employee' || user.role === 'superadmin'){
-        let projects = await ProjectModel.getAllProjects();
-        return generateResponseObject(true, null, Object.assign(user, {projects: projects}));
+        let result = await ProjectModel.getAllProjects();
+        return generateResponseObject(true, null, Object.assign(user, {projects: result.data}));
       }
       return generateResponseObject(true, null, user);
     } catch (error) {

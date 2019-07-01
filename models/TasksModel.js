@@ -1,6 +1,7 @@
 const db = require('../database');
 const generateResponseObject = require('../lib/generateResponseObject');
 const validate = require('../lib/validator');
+const isObjectId = require('../lib/isObjectId');
 require('../schemas/task');
 
 class TasksModel {
@@ -38,6 +39,21 @@ class TasksModel {
       }
       let updatedTask = await task.save();
       return generateResponseObject(true, null, updatedTask);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async getTaskById(id){
+    if(!isObjectId(id)){
+      return generateResponseObject(false, "Please send valid Object Id", null);
+    }
+    try {
+      let task = await this.Tasks.findById(id);
+      if(task == null){
+        return generateResponseObject(false, "Task does not exists!", null);
+      }
+      return generateResponseObject(true, null, task);
     } catch (error) {
       throw new Error(error.message);
     }

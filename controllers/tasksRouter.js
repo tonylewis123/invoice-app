@@ -14,4 +14,13 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    let result = await TasksModel.getTaskById(req.params.id);
+    return res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(generateResponseObject(false, error.message, null));
+  }
+});
+
 module.exports = router;
