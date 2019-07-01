@@ -38,7 +38,7 @@ export default class SingleTask extends React.Component {
         return (
             <div className="Admin_page" style={background_page}>
                 <div className="admin_page_size">
-                    <HeaderSecond name="Task 1" loc="/Admin_page" />
+                    <HeaderSecond name="Task 1" loc="/Project" />
                     <div className="new_project">
                
                         <div className="new_project_box">

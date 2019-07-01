@@ -13,14 +13,14 @@ class Projects_tests extends React.Component  {
         super(props);
       }
       render(){
-        console.log(this.state);
+        console.log('123',this.props.data);
         
         const options = [
           {
             key: 1,
             text: this.props.data.name,
             value: 1,
-            content: <Test  content='task empty' subheader='12.11' />,
+            content: <Test   name={this.props.data.tasks.hours} subheader='12.11' />,
           },
         ]
         return(

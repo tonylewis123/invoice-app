@@ -4,6 +4,7 @@ import logo from "../../assets/img/logo.png";
 import loginBg from "../../assets/img/login_bg.png";
 import {Route, NavLink} from "react-router-dom";
 import { POST } from '../../core/CRUD';
+import Load from "../../assets/img/Load.gif"
 
 export default class Login extends React.Component {
       constructor(props){
@@ -34,7 +35,8 @@ export default class Login extends React.Component {
                     massage:'Please enter valid password!'
                 }
             ],
-            error: ""
+            error: "",
+            load: false
           }
       }
 
@@ -64,7 +66,8 @@ export default class Login extends React.Component {
             }
         })
         this.setState({
-            inputs
+            inputs,
+            error: ""
         })
     }
 
@@ -73,6 +76,7 @@ export default class Login extends React.Component {
       let password = data[1].value;
 
       if(email && password){
+        this.setState({load:true})
         try {
           let response = await POST('api/auth/login', { email, password });
           if(response.success){
@@ -80,16 +84,18 @@ export default class Login extends React.Component {
             localStorage.setItem('userToken', response.data.token);
             window.location.href = '/Project';
           } else {
-            this.setState({error: response.error});
+            this.setState({error: response.error, load:false});
           }
         } catch (error) {
           this.setState({
-            error: error.message
+            error: error.message,
+            load: false
           });
         }
       } else {
         this.setState({
-          error: 'Username or password is empty!'
+          error: 'Username or password is empty!',
+          load: false
         });
       }
     }
@@ -101,7 +107,8 @@ export default class Login extends React.Component {
     
         return(
             <div className="Login" style={this.loginStyle}>
-                <div className="login_size">
+              { this.state.load ? <img src={Load}  className="loading" /> : null }
+                <div className="login_size" style={this.state.load?{opacity:.2}:{} } >
                 <div className="login_top">
                     <img src={logo} />
                 </div>
@@ -110,6 +117,7 @@ export default class Login extends React.Component {
                       return(
                           <>
                           <p className="error_message">{elm.isTuched && !elm.isValid?elm.massage:''}</p>
+                          <p className="error_message">{this.state.error}</p>
                           <input key={index} type={elm.type} value={elm.value} onChange={event=>this.onChangeInp(event.target.value,index)} placeholder={elm.label} />
                           </>
                       )

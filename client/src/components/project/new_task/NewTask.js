@@ -7,6 +7,8 @@ import Save_btn from "../save_btn/Save_btn";
 import { POST, GET } from '../../../core/CRUD';
 import Expenses from "../expenses/Expenses";
 import { NavLink } from "react-router-dom";
+import Load from "../../../assets/img/Load.gif"
+import { log } from 'util';
 
 var curr = new Date();
 curr.setDate(curr.getDate());
@@ -16,7 +18,7 @@ export default class newTask extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            project : [],
+            tasks : [],
             inputs: [
                 {
                     label: "Task Name",
@@ -99,7 +101,9 @@ export default class newTask extends React.Component {
             error: "",
             expenses: [],
             show_expenses: false,
-            clickCount : 1
+            clickCount : 1,
+            load: false,
+            projectId: ''
         }
     }
 
@@ -116,20 +120,18 @@ export default class newTask extends React.Component {
             return this.setState({ error: response.error });
         }
         
-        this.setState({ project: response.data });
-         
-        
+        this.setState({ tasks: response.data.tasks, projectId: response.data._id });
     }
 
-    saveTask = async () => {
+    saveTask = async (state) => {
+        // this.setState({load:true})
         let inputs = [...this.state.inputs];
         let taskName = inputs[0].value;
         let taskDate = inputs[1].value;
         let hours = inputs[2].value;
         let description = inputs[3].value;
         
-        let expenses = this.state.expenses.map(item => {
-            
+        let expenses = state.expenses.map(item => {
             return {
                 supplier: item.supplier,
                 materialsCost: item.materials_cost,
@@ -138,20 +140,25 @@ export default class newTask extends React.Component {
         });
 
         if (taskName === '' || taskDate === '' || hours === '' || description === '' ) {
-            return this.setState({ error: 'All fields are required!' });
+            return this.setState({ error: 'All fields are required!', load: false });
         }
 
         let response = await POST('api/tasks', {
-            taskName: taskName,
+            name: taskName,
             taskDate: taskDate,
             hours: hours,
             description: description,
             expenses: expenses,
-            projectId: this.state.project._id
+            projectId: state.projectId
         });
-        console.log(response, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        
+        if (!response.success) {
+            return this.setState({ error: response.error});
+        }
+        
         
     }
+
     inputValue = (value, index) => {
         let inputs = this.state.inputs;
         let input = inputs[index];
@@ -202,8 +209,9 @@ export default class newTask extends React.Component {
 
         return (
             <div className="Admin_page" style={background_page}>
-                <div className="admin_page_size">
-                    <HeaderSecond name="New Task" loc="/Admin_page" />
+                                { this.state.load ? <img src={Load}  className="loading" /> : null }
+                <div className="admin_page_size" style={this.state.load?{opacity:.2}:{}}>
+                    <HeaderSecond name="New Task" loc="/Project" />
                     <div className="new_project">
                         <p className="error_message">{this.state.inputs[0].isTuched && !this.state.inputs[0].isValid ? this.state.inputs[0].massage : ''}</p>
                         <div className="new_project_box">
@@ -270,7 +278,7 @@ export default class newTask extends React.Component {
                          )
                     })}
                     <div className="newTask_clear"></div>
-                    <Save_btn  btnClick={this.saveTask} />
+                    <Save_btn  btnClick={() => this.saveTask(this.state)} />
                     <div className="newTask_clear"></div>
                 </div>
             </div>

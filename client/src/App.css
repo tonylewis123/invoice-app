@@ -10,3 +10,17 @@ button, input{
     outline: none;
     border: none;
 }
+.loading{
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    width: 100px;
+}
+@media screen and (max-width:767px){
+    .loading{
+        position: absolute;
+        left: 40%;
+        top: 50%;
+        width: 100px;
+    }
+}
