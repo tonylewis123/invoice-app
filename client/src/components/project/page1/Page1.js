@@ -5,13 +5,19 @@ import background from "../../../assets/img/login_bg.png";
 import Projects_tests from "../project_tests/Projects_tests";
 import { POST, GET } from '../../../core/CRUD';
 import moment from "moment";
+import Load from "../../../assets/img/Load.gif";
+import Next_btn from "../next_btn/Next_btn";
+import Prev_btn from "../next_btn/Prev_btn";
 
 
 export default class Page1 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: []
+            projects: [],
+            load: true,
+            count: 0,
+            view: 4,
         }
     }
 
@@ -30,10 +36,11 @@ export default class Page1 extends React.Component {
             }
             return this.setState({ error: response.error });
         }
-        this.setState({ projects: response.data.projects.reverse() });
+        this.setState({ projects: response.data.projects.reverse(), load: false });
     }
-    generateProjectsItem = data => {
-        return data.map((item, index) => {
+    generateProjectsItem = () => {
+        let projects = this.state.projects;
+        return projects.slice(this.state.count * this.state.view, (this.state.count + 1) * this.state.view).map((item, index) => {
             return (
                 <div key={index}>
                     <div className="project_info">
@@ -46,7 +53,26 @@ export default class Page1 extends React.Component {
             )
         })
     }
+    changeNextPageHandle = () => {
+        
+        // if((this.state.count + 1) * this.state.view >= this.state.projects.length-1){
+        //     return
+        // }
+        this.setState({
+            count:this.state.count + 1
+        })
+        console.log(this.state.count * this.state.view)
+    }
 
+    changePrevPageHandle = () => {
+        // if(this.state.count <= 0){
+        //     return
+        // }
+        this.setState({
+            count:this.state.count - 1
+        })
+        console.log(this.state.projects)
+    }
     render() {
         console.log(this.state.projects);
         
@@ -55,12 +81,14 @@ export default class Page1 extends React.Component {
         }
         return (
             <div className="Page1" style={background_page}>
-                <div className="page1_size">
+                 { this.state.load ? <img src={Load}  className="loading" /> : null }
+                <div className="page1_size" style={this.state.load?{opacity:.2}:{} }>
                     <Header />
-                    {this.state.projects.length > 0 ? this.generateProjectsItem(this.state.projects) : ""}
-                    <div className="page1_clear_top"></div>
-                    <div className="next_btn_div">
-                    <button className="next_btn">next <i className="fas fa-arrow-right" /> </button>
+                    {this.state.projects.length > 0 ? this.generateProjectsItem() : ""}
+                    {/* <div className="page1_clear_top"></div> */}
+                    <div className="admin_p_clear_top">
+                        {this.state.count>0 && <Prev_btn onClick={this.changePrevPageHandle} />}
+                        {(this.state.count + 1) * this.state.view <= this.state.projects.length-1 && <Next_btn onClick={this.changeNextPageHandle} />}
                     </div>
 
                 </div>

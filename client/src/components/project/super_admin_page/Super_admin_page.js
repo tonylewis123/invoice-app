@@ -4,6 +4,7 @@ import Header from '../header/Header';
 import background from "../../../assets/img/login_bg.png";
 import { POST, GET, DELETE } from "../../../core/CRUD"
 import { async } from 'q';
+import Load from "../../../assets/img/Load.gif"
 
 export default class Super_admin_page extends React.Component {
     constructor(props) {
@@ -24,11 +25,14 @@ export default class Super_admin_page extends React.Component {
                 massage: 'Please enter name',
             },
             role: {
-                value: "employer"
+                value: "employee"
             },
         },
         users: [],
-        error: ""
+        error: "",
+        load: true,
+        
+
     }
 
    async componentDidMount (){
@@ -36,7 +40,7 @@ export default class Super_admin_page extends React.Component {
         if(!res.success){
            return this.setState({error: res.error}); 
         } 
-        this.setState({users: res.data});   
+        this.setState({users: res.data, load: false});   
     }
 
     changeInputHandle = (element, value) => {
@@ -74,9 +78,10 @@ export default class Super_admin_page extends React.Component {
         this.setState({ role })
     }
     createUser = async(data) => {
+        this.setState({load: true})
         let { email, name, role } = data;
         if (!email.value || !name.value || !role.value) {
-            return this.setState({ error: 'All fields are required!' });
+            return this.setState({ error: 'All fields are required!', load: false });
         }
 
         let response = await POST('api/admin/create_user', {
@@ -85,21 +90,23 @@ export default class Super_admin_page extends React.Component {
             fullName: name.value
         });
         if(!response.success){
-            return this.setState({error: response.error});
+            return this.setState({error: response.error, load: false});
         }
         email.value = '';
         name.value = '';
-        this.setState({users: response.data, error: '',inputs:data });
+        this.setState({users: response.data, error: '',inputs:data, load: false });
     }
 
     deleteUser = async (userId) => {
+        this.setState({load:true})
         let res = await DELETE('api/admin/delete_user', { userId });
         if(!res.success){
-            return this.setState({error: res.error});
+            return this.setState({error: res.error, load: false});
         }
         this.setState({
             users: res.data,
-            error: ''
+            error: '',
+            load: false
         });
     }
 
@@ -120,9 +127,10 @@ export default class Super_admin_page extends React.Component {
         }
         return (
             <div className="Admin_page" style={background_page}>
-                <div className="admin_page_size">
+                { this.state.load ? <img src={Load}  className="loading" /> : null }
+                <div className="admin_page_size" style={this.state.load?{opacity:.2}:{}}>
                     <Header />
-                    {this.state.error? <div>{this.state.error}</div> : null}
+                    {this.state.error? <div> <p className="error_message">{this.state.error}</p> </div> : null}
                     <div className="sup_admin_clear"></div>
                     <div className="sup_admin_page_search">
                         <p>{this.state.inputs.email.isTuched && !this.state.inputs.email.isValid ? this.state.inputs.email.massage : ''}</p>

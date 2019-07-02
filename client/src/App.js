@@ -24,7 +24,7 @@ function App() {
       <Route path={'/NewProject'} exact={true} component={AddNewProject}  />
       <Route path={'/single_project/:id'} exact={true} component={FirstProject} /> 
       <Route path={'/single_project/:id/New_task'} exact={true} component={NewTask} /> 
-      <Route path={'/single_project/:id/SingleTask'} exact={true} component={SingleTask} /> 
+      <Route path={'/SingleTask/:id'} exact={true} component={SingleTask} /> 
     </div>
   );
 }

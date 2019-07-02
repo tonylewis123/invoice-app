@@ -6,9 +6,11 @@ import Projects_tests from "../project_tests/Projects_tests";
 import { NavLink } from "react-router-dom";
 import { Input } from 'semantic-ui-react';
 import Next_btn from "../next_btn/Next_btn";
+import Prev_btn from "../next_btn/Prev_btn";
 import Save_btn from "../save_btn/Save_btn";
 import { POST, GET } from '../../../core/CRUD';
 import moment from "moment";
+import Load from "../../../assets/img/Load.gif"
 
 var curr = new Date();
 curr.setDate(curr.getDate());
@@ -53,7 +55,10 @@ export default class AddNewProject extends React.Component {
                 }
             ],
             error: "",
-            projects: []
+            projects: [],
+            load: true,
+            count: 0,
+            view: 4,
         }
     }
 
@@ -69,7 +74,7 @@ export default class AddNewProject extends React.Component {
             }
             return this.setState({ error: response.error });
         }
-        this.setState({ projects: response.data.projects.reverse() });
+        this.setState({ projects: response.data.projects.reverse(), load: false });
     }
 
 
@@ -89,7 +94,7 @@ export default class AddNewProject extends React.Component {
         });
         input.isTuched = true;
         input.value = value;
-        this.setState({ inputs })
+        this.setState({ inputs, error: "" })
 
     }
     saveProject = async () => {
@@ -97,9 +102,9 @@ export default class AddNewProject extends React.Component {
         let name = inputs[0].value;
         let date = inputs[1].value;
         let description = inputs[2].value;
-
+        this.setState({load:true})
         if (name === '' || date === '' || description === '') {
-            return this.setState({ error: 'All fields are required!' });
+            return this.setState({ error: 'All fields are required!', load:false});
         }
 
         let response = await POST('api/users/createProject', {
@@ -111,16 +116,17 @@ export default class AddNewProject extends React.Component {
         console.log(response.data.projects);
 
         if (!response.success) {
-            return this.setState({ error: response.error });
+            return this.setState({ error: response.error});
         }
         name = '';
         description = '';
-        this.setState({ projects: response.data.projects.reverse(), error: '', inputs });
+        this.setState({ projects: response.data.projects.reverse(), error: '', inputs, load: false });
         console.log(this.state.projects);
     }
 
-    generateProjectsItem = data => {
-        return data.map((item, index) => {
+    generateProjectsItem = () => {
+        let projects = this.state.projects
+        return projects.slice(this.state.count * this.state.view, (this.state.count + 1) * this.state.view).map((item, index) => {
             return (
                 <div key={index}>
                     <div className="project_info">
@@ -133,6 +139,26 @@ export default class AddNewProject extends React.Component {
             )
         })
     }
+    changeNextPageHandle = () => {
+        
+        // if((this.state.count + 1) * this.state.view >= this.state.projects.length-1){
+        //     return
+        // }
+        this.setState({
+            count:this.state.count + 1
+        })
+        console.log(this.state.count * this.state.view)
+    }
+
+    changePrevPageHandle = () => {
+        // if(this.state.count <= 0){
+        //     return
+        // }
+        this.setState({
+            count:this.state.count - 1
+        })
+        console.log(this.state.projects)
+    }
     render() {
         let background_page = {
             backgroundImage: `url(${background})`,
@@ -140,8 +166,9 @@ export default class AddNewProject extends React.Component {
 
         return (
             <div className="Admin_page" style={background_page}>
-                <div className="admin_page_size">
-                    <HeaderSecond name="New Project" loc="/Admin_page" />
+                  { this.state.load ? <img src={Load}  className="loading" /> : null }
+                <div className="admin_page_size" style={this.state.load?{opacity:.2}:{}}>
+                    <HeaderSecond name="New Project" loc="/Project" />
                     <div className="new_project">
                         <div className="new_project_box">
                             <p>Project Name</p>
@@ -160,13 +187,13 @@ export default class AddNewProject extends React.Component {
                         <p className="error_message">{this.state.inputs[2].isTuched && !this.state.inputs[2].isValid ? this.state.inputs[2].massage : ''}</p>
                     </div>
                     <div className="addNewPrClear_top" >
+                        <p className="error_message">{this.state.error}</p>
+                        <div className="addNPClear"></div>
                         <Save_btn btnClick={this.saveProject} />
                     </div>
-                    {this.state.projects.length > 0 ? this.generateProjectsItem(this.state.projects) : ""}
+                    {this.state.projects.length > 0 ? this.generateProjectsItem() : ""}
 
-                    <div className="addNewPrClear_bottom">
-                        <NavLink to={"/page1"}><Next_btn /></NavLink>
-                    </div>
+  
 
                 </div>
             </div>

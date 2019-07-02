@@ -4,6 +4,7 @@ import Admin_page from "./admin_page/Admin_page";
 import Super_admin_page from "./super_admin_page/Super_admin_page";
 import { GET } from '../../core/CRUD';
 import { log } from 'util';
+import Load from "../../assets/img/Load.gif"
 
 
 
@@ -14,7 +15,8 @@ export default class Project extends React.Component{
         super(props);
         this.state = {
             error: '',
-            user: ''
+            user: '',
+            load: true
         };
     }
 
@@ -31,11 +33,11 @@ export default class Project extends React.Component{
             }
             return this.setState({error: response.error});
         }
-        this.setState({user: response.data});
+        this.setState({user: response.data, load: false});
     }
 
     renderDashboard = user => {
-        if(user.role && user.role === 'employer'){
+        if(user.role && user.role === 'employee'){
           return (<Page1 user={user}/>);
         }
         if(user.role && user.role === 'superadmin'){
@@ -49,7 +51,11 @@ export default class Project extends React.Component{
     render(){
         return(
             <div className="project">
-                { this.state.user ? this.renderDashboard(this.state.user) : null }
+            
+                { this.state.load ? <img src={Load}  className="loading" /> : null }
+               <div>
+               { this.state.user ? this.renderDashboard(this.state.user) : null }
+               </div>
             </div>
         )
     }
