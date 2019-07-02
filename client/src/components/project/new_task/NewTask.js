@@ -68,7 +68,7 @@ export default class newTask extends React.Component {
                     label: "Supplier",
                     isTuched: false,
                     isValid: false,
-                    value: "",
+                    value: "1",
                     validation: {
                         required: true,
                         email: true
@@ -278,7 +278,10 @@ export default class newTask extends React.Component {
                          )
                     })}
                     <div className="newTask_clear"></div>
-                    <Save_btn  btnClick={() => this.saveTask(this.state)} />
+                    {this.state.inputs[0].value !== "" && this.state.inputs[2].value !== "" && this.state.inputs[3].value !== "" ? <NavLink to={`/single_project/${this.state.projectId}`}> <Save_btn  btnClick={() => this.saveTask(this.state)} /></NavLink> : ""}
+                    
+                   
+                   
                     <div className="newTask_clear"></div>
                 </div>
             </div>

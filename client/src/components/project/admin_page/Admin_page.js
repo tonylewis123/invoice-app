@@ -43,7 +43,7 @@ export default class Admin_page extends React.Component {
             project: response.data.projects.reverse(),
             load: false
         });
- 
+
     }
     generateProjectsItem = () => {
         const projects = this.state.projects;
@@ -63,13 +63,13 @@ export default class Admin_page extends React.Component {
         })
     }
     filterProject = (val) => {
-        // console.log(radio.checked);
+
         let arr = this.state.projects.filter(item => {
-            console.log(item.name, 'item')
+
             //    whiteList.indexOf(event.type) > -1
             return item.name.indexOf(val) > -1
         })
-        console.log(this.state.projects)
+  
         if (val == "") {
             this.setState({ projects: this.state.project })
         } else {
@@ -78,7 +78,7 @@ export default class Admin_page extends React.Component {
 
     }
     sortProject = (el, name) => {
-        console.log(el.checked);
+
         if (el.checked) {
             let projects = this.state.projects;
            
@@ -106,7 +106,7 @@ export default class Admin_page extends React.Component {
         this.setState({
             count:this.state.count + 1
         })
-        console.log(this.state.count * this.state.view)
+
     }
 
     changePrevPageHandle = () => {
@@ -116,7 +116,7 @@ export default class Admin_page extends React.Component {
         this.setState({
             count:this.state.count - 1
         })
-        console.log(this.state.projects)
+
     }
 
     
@@ -125,7 +125,7 @@ export default class Admin_page extends React.Component {
         let background_page = {
             backgroundImage: `url(${background})`,
         }
-        console.log(this.state.projects)
+        
         return (
             <div className="Admin_page" style={background_page}>
                                  { this.state.load ? <img src={Load}  className="loading" /> : null }

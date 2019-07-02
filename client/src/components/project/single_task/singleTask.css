@@ -3,6 +3,10 @@
     font-size: 16px !important;
     margin-top: 20px;
 }
+.fa-check:before {
+    content: "\f00c";
+    margin-left: 15px;
+}
 @media screen and (max-width:767px) {
     .descript_info{
         font-size: 14px !important;

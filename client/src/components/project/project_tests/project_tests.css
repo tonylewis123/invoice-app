@@ -47,6 +47,11 @@
     color: #2A617E;
     cursor: pointer
 }
+.taskBox{
+    margin: 5px 0 10px 0;
+    border-bottom: 1px solid #2A617E;
+    padding-bottom: 5px
+}
 @media screen and (max-width:450px){
     .fa-arrow-circle-right:before {
         margin-left: 10px;

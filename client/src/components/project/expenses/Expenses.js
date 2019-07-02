@@ -17,12 +17,13 @@ class Expenses extends React.Component  {
         }
       }
       render(){ 
-        console.log(this.props);
+        console.log(this.props.element, "dsfdsgdfgdfgdfgdfgdfg");
+        
         
         const options = [
           {
             key: 1,
-            text: this.props.name,
+            text: this.state.ExpensesName,
             value: 1,
             content: <ExpensesInfo element={this.props.element} />,
           },

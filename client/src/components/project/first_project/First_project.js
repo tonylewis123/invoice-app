@@ -15,7 +15,8 @@ export default class FirstProject extends React.Component {
         this.state = {
                     project: {},
                     error: "",
-                    load: true
+                    load: true,
+                    
         }
     }
 
@@ -29,19 +30,20 @@ export default class FirstProject extends React.Component {
             return this.setState({ error: response.error });
         }
         this.setState({ project: response.data, load: false });
-        console.log(this.state.project, "pr");
+
     }
 
 
     generateProjectsTask = () => {
         let tasks = this.state.project.tasks; 
-        console.log('tesar',tasks);
+
         
        return tasks.map((item, index) => {
             return (
                 <div className="taskInformation" key={index}>
                 <p>{item.name}</p>
                 <p>{item.hours+" h"}</p>
+                <NavLink to={`/SingleTask/${item._id}`}><p><i className="fas fa-arrow-circle-right" /></p></NavLink>
             </div>
             )
         })

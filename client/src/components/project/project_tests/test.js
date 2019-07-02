@@ -9,14 +9,16 @@ class Test extends React.Component{
     }
 
     render(){
-        console.log(this.props, "props");
+
         
         return(
             <div>
-                <p className="text_tittle">no task</p>
+                <p className="text_tittle">{this.props.name}</p>
                 <div className="test_flex">
-                <p>{this.props.name}</p>
-                <p>{this.props.data}</p>
+                <p>{this.props.date}</p>
+                <p>{this.props.hours}</p>
+                <div> {this.props.loc} </div>
+
                 </div>
             </div>
         )
