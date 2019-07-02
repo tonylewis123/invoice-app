@@ -62,7 +62,12 @@ class UserModel {
     try {
       let user = await this.Users.findOne({_id: id})
           .select('-password')
-          .populate('projects')
+          .populate({
+            path: 'projects',
+            populate: {
+              path: 'tasks'
+            }
+          })
           .exec();
       if(user === null){
         return generateResponseObject(false, 'User does not exists', null);
