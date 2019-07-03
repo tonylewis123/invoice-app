@@ -41,7 +41,7 @@ class TasksModel {
       let updatedTask = await task.save();
       return generateResponseObject(true, null, updatedTask);
     } catch (error) {
-      throw new Error(error.message);
+        throw new Error(error.message);
     }
   }
 
@@ -58,7 +58,43 @@ class TasksModel {
       }
       return generateResponseObject(true, null, task);
     } catch (error) {
-      throw new Error(error.message);
+        throw new Error(error.message);
+    }
+  }
+
+  async update(id, taskData){
+    if(!isObjectId(id)){
+      return generateResponseObject(false, "Please send valid Object Id", null);
+    }
+
+    try {
+      let task = await this.Tasks.findById(id);
+      if(task == null){
+        return generateResponseObject(false, "Task does not exists!", null);
+      }
+
+      let updatedExpenses = [];
+      if(taskData.expenses.length){
+        updatedExpenses = taskData.expenses.map(expense => {
+          return {
+            supplier: expense.supplier,
+            materialsCost: expense.materialsCost,
+            materialsDescription: expense.materialsDescription,
+            taskId: task._id
+          }
+        });
+      }
+
+      let updatedTask = await this.Tasks.findOneAndUpdate({_id: id},{
+        taskDate: taskData.taskDate,
+        hours: taskData.hours,
+        description: taskData.description,
+        name: taskData.name,
+        expenses: updatedExpenses
+      }, { new: true, useFindAndModify: false });
+      return generateResponseObject(true, null, updatedTask);
+    } catch (error) {
+        throw new Error(error.message);
     }
   }
 }
