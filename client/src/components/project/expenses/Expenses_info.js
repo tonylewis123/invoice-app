@@ -40,12 +40,33 @@ class ExpensesInfo extends React.Component {
     defaultclick = event => {
         event.stopPropagation();
     }
+
+
+
     editTaskMaterialsCost = () =>{
         this.setState({newMaterialsCost: true})
     }
     editTaskMaterialsDescription = () =>{
         this.setState({newMaterialsDescription: true})
     }
+    newTaskMaterialsCost = () =>{
+        this.setState({newMaterialsCost: false})
+    }
+    newTaskMaterialsDescription = () =>{
+        this.setState({newMaterialsDescription: false})
+    }
+
+
+    inputValue = (value, index) => {
+        let task = this.state.task;  
+        if(value !== "" && value !== null){    
+            task[index] = value
+            this.setState({ task })
+            console.log(task, "rrrr");
+        }
+        
+    }
+
     render() {
         return (
             <div className="ExpensesInfo">
@@ -69,16 +90,16 @@ class ExpensesInfo extends React.Component {
                     <div className="new_project_box">
                         <p>Materials <br /> cost</p>
                         <div className="materialsCost">
-                            <p>{typeof this.props.element !== 'undefined' && this.state.newMaterialsCost ? <Input type="text" /> : this.props.element.materialsCost}</p>
-                            <p onClick={this.editTaskMaterialsCost}> {this.state.newMaterialsCost ? <i className="fas fa-check" /> : <i className="fas fa-pencil-alt" />} </p>
+                           {typeof this.props.element !== 'undefined' && this.state.newMaterialsCost ? <Input type="text" placeholder={this.props.element.materialsCost} onChange={event => this.inputValue(event.target.value,'materialsCost')} /> : <p> {this.props.element.materialsCost} </p>}
+                            <p> {this.state.newMaterialsCost ? <i className="fas fa-check" onClick={this.newTaskMaterialsCost} /> : <i className="fas fa-pencil-alt" onClick={this.editTaskMaterialsCost} />} </p>
                         </div>
                     </div>
 
                     <div className="new_project_box">
                         <p>Materials <br /> description</p>
                         <div className="materialsCost">
-                            <p>{typeof this.props.element !== 'undefined' && this.state.newMaterialsDescription ? <Input type="text" /> : this.props.element.materialsDescription}</p>
-                            <p onClick={this.editTaskMaterialsDescription}>   {this.state.newMaterialsDescription? <i className="fas fa-check" /> : <i className="fas fa-pencil-alt" />} </p>
+                            {typeof this.props.element !== 'undefined' && this.state.newMaterialsDescription ? <Input type="text" onChange={event => this.inputValue(event.target.value,'materialsDescription')} placeholder={this.props.element.materialsDescription} /> :<p> {this.props.element.materialsDescription}</p>}
+                            <p>   {this.state.newMaterialsDescription? <i className="fas fa-check"  onClick={this.newTaskMaterialsDescription} /> : <i className="fas fa-pencil-alt"  onClick={this.editTaskMaterialsDescription} />} </p>
                         </div>
                     </div>
 

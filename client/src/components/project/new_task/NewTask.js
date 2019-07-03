@@ -124,7 +124,6 @@ export default class newTask extends React.Component {
     }
 
     saveTask = async (state) => {
-        // this.setState({load:true})
         let inputs = [...this.state.inputs];
         let taskName = inputs[0].value;
         let taskDate = inputs[1].value;
@@ -206,7 +205,7 @@ export default class newTask extends React.Component {
         let background_page = {
             backgroundImage: `url(${background})`,
         }
-
+        
         return (
             <div className="Admin_page" style={background_page}>
                                 { this.state.load ? <img src={Load}  className="loading" /> : null }
