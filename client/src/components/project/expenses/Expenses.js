@@ -17,7 +17,7 @@ class Expenses extends React.Component  {
         }
       }
       render(){ 
-        console.log(this.props.element, "dsfdsgdfgdfgdfgdfgdfg");
+        console.log(this.props.myIndex);
         
         
         const options = [
@@ -25,7 +25,7 @@ class Expenses extends React.Component  {
             key: 1,
             text: this.state.ExpensesName,
             value: 1,
-            content: <ExpensesInfo element={this.props.element} />,
+            content: <ExpensesInfo myIndex={this.props.myIndex} change={this.props.change} element={this.props.element} />,
           },
         ]
         return(

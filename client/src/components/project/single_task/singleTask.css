@@ -6,6 +6,7 @@
 .fa-check:before {
     content: "\f00c";
     margin-left: 15px;
+    background-color: #2A617E
 }
 @media screen and (max-width:767px) {
     .descript_info{
