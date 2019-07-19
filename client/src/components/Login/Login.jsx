@@ -46,7 +46,7 @@ export default class Login extends React.Component {
         const input = inputs[index];
         input.value = value;
         input.isTuched = true;
-        Object.keys(input.validation).map((elm)=>{
+        Object.keys(input.validation).map((elm, index)=>{
             if(elm == "required"){
                 if(value == "" || value == null){
                     input.isValid = false;
@@ -84,9 +84,11 @@ export default class Login extends React.Component {
             localStorage.setItem('userToken', response.data.token);
             window.location.href = '/Project';
           } else {
-            this.setState({error: response.error, load:false});
+            this.setState({ load:false});
           }
         } catch (error) {
+          console.log(error,"errrrrrrr");
+          
           this.setState({
             error: error.message,
             load: false
@@ -113,11 +115,12 @@ export default class Login extends React.Component {
                     <img src={logo} />
                 </div>
                 <div className="login_inputs">
+                <p className="error_message">{this.state.error}</p>
                   {this.state.inputs.map((elm, index)=>{
                       return(
                           <>
                           <p className="error_message">{elm.isTuched && !elm.isValid?elm.massage:''}</p>
-                          <p className="error_message">{this.state.error}</p>
+                          
                           <input key={index} type={elm.type} value={elm.value} onChange={event=>this.onChangeInp(event.target.value,index)} placeholder={elm.label} />
                           </>
                       )

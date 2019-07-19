@@ -26,7 +26,8 @@ export default class SingleTask extends React.Component {
             newDescription: false,
             newHours: false,
             pageName : "",
-            timeValue : curr.toISOString().substr(0, 10)
+            timeValue : curr.toISOString().substr(0, 10),
+            expenses:[],
         }
     }
 
@@ -44,7 +45,6 @@ export default class SingleTask extends React.Component {
             return this.setState({ error: response.error });
         }
         this.setState({ task: response.data, load: false, pageName: response.data.name });
-        console.log(this.state.pageName,"reeeee");
         
     }
     editTaskName = () => {
@@ -81,7 +81,7 @@ export default class SingleTask extends React.Component {
             
             task[index] = value
             this.setState({ task })
-            console.log(task, "rrrr");
+          
         }
         
     }
@@ -93,14 +93,14 @@ export default class SingleTask extends React.Component {
         let taskDate = task.taskDate;
         let hours = task.hours;
         let description = task.description;
-        let expenses =  [];
+        let expenses =  task.expenses;
         if (taskName === '' || taskDate === '' || hours === '' || description === '') {
             return this.setState({ error: 'All fields are required!', load: false });
         }
 
         let urlData = window.location.href.split("/");
         let taskId = urlData[urlData.length - 1];
-        console.log(taskName, taskDate, hours, description, expenses, "lllllllllllleee");
+    
         
         let response = await PUT(`api/tasks/${taskId}`, {
             name: taskName,
@@ -113,6 +113,11 @@ export default class SingleTask extends React.Component {
         if (!response.success) {
             return this.setState({ error: response.error });
         }
+    }
+    changeExpenses = (value,index,myIndex) => {
+        const task = this.state.task;
+        task.expenses[myIndex][index] = value;
+        this.setState({task})
     }
 
     render() {
@@ -172,7 +177,7 @@ export default class SingleTask extends React.Component {
 
                     {this.state.task.expenses ? this.state.task.expenses.map((item, index) => {
                         return (
-                            <Expenses element={item} key={index} />
+                            <Expenses element={item} key={index} myIndex={index} change={this.changeExpenses} />
                         )
                     }) : ""}
 

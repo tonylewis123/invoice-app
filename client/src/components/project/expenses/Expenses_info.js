@@ -33,7 +33,6 @@ class ExpensesInfo extends React.Component {
             return this.setState({ error: response.error });
         }  
         this.setState({ task: response.data, load: false });    
-        console.log(this.state.task, "qwe");
         
     }
 
@@ -58,11 +57,11 @@ class ExpensesInfo extends React.Component {
 
 
     inputValue = (value, index) => {
+        this.props.change(value,index,this.props.myIndex)
         let task = this.state.task;  
         if(value !== "" && value !== null){    
             task[index] = value
             this.setState({ task })
-            console.log(task, "rrrr");
         }
         
     }
