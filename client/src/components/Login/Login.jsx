@@ -84,7 +84,7 @@ export default class Login extends React.Component {
             localStorage.setItem('userToken', response.data.token);
             window.location.href = '/Project';
           } else {
-            this.setState({ load:false});
+            this.setState({ load:false, error: response.error });
           }
         } catch (error) {
           console.log(error,"errrrrrrr");
