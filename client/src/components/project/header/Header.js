@@ -21,6 +21,11 @@ export default class Header extends React.Component {
             userName: response.data.fullName
         })
     }
+
+    logOut = () => {
+        localStorage.removeItem('userToken');
+    }
+
     render(){
         return(
             <div className="Header">
@@ -34,7 +39,7 @@ export default class Header extends React.Component {
                         </div>
                         <div className="header_size_right">
                             <p className="Employer_Name">{this.state.userName}</p>
-                         <NavLink to="/Login"><p className="Employer_info">log out</p></NavLink>   
+                         <NavLink to="/Login"><p className="Employer_info" onClick={this.logOut}> <i className="fas fa-sign-out-alt" /> log out</p></NavLink>   
                         </div>
                     </div>
             </div>
