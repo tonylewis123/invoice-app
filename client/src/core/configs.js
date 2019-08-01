@@ -3,7 +3,7 @@ const PORT = 3000;
 
 const CONFIGS = {
   // DOMAIN: `http://${HOST}:${PORT}`
-  DOMAIN: 'https://invoiceeapp.herokuapp.com'
+  DOMAIN: 'https://www.qis-industrial.com'
 };
 
 export default CONFIGS;
